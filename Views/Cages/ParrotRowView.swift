@@ -30,5 +30,6 @@ struct ParrotRowView: View {
             Spacer()
         }
         .padding(.vertical, 8)
+        
     }
 }

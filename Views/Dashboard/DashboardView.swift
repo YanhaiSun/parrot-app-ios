@@ -119,6 +119,11 @@ struct StatRow: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                )
+        
     }
 }
 
@@ -164,6 +169,8 @@ struct OccupancyStatRow: View {
                         Color.gray.opacity(0.2),
                         lineWidth: 8
                     )
+                    .shadow(color: Color.gray.opacity(0.2), radius: 5, x: 0, y: 2)
+
                 
                 Circle()
                     .trim(from: 0, to: progress)
@@ -175,6 +182,8 @@ struct OccupancyStatRow: View {
                         )
                     )
                     .rotationEffect(.degrees(-90))
+                    .shadow(color: color.opacity(1), radius: 12, x: 0, y: 3)
+
             }
             .frame(width: 40, height: 40)
             
@@ -183,6 +192,10 @@ struct OccupancyStatRow: View {
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+        .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+                )
     }
 }
 

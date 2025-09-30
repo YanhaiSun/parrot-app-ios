@@ -1,121 +1,71 @@
-//
-//  SearchView.swift
-//  parrot
-//
-//  Created by sunyanhai on 2025/9/26.
-//
-
 import SwiftUI
 import Combine
 
 struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @StateObject private var cageModel = CageListViewModel()
-
+    
     @State private var searchText = ""
-    @State private var isSearching = false
-    @FocusState private var isSearchFieldFocused: Bool
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                // Background
-                Color(.systemBackground)
-                    .ignoresSafeArea()
-                
-                VStack(spacing: 0) {
-                    // Search header with frosted glass effect
-                    searchHeader
-                    
-                    // Content
-                    if searchText.isEmpty {
-                        emptySearchState
-                    } else if viewModel.isLoading {
-                        loadingView
-                    } else if viewModel.searchResults.isEmpty {
-                        noResultsView
-                    } else {
-                        searchResultsView
-                    }
+        NavigationStack {
+            Group {
+                if searchText.isEmpty {
+                    emptySearchState
+                } else if viewModel.isLoading {
+                    loadingView
+                } else if viewModel.searchResults.isEmpty {
+                    noResultsView
+                } else {
+                    searchResultsView
                 }
             }
-        }
-    }
-    
-    private var searchHeader: some View {
-        VStack(spacing: 16) {
-            // Main search bar with frosted glass
-            HStack(spacing: 12) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                    .font(.title3)
-                
-                TextField("输入脚环号搜索鹦鹉...", text: $searchText)
-                    .focused($isSearchFieldFocused)
-                    .textFieldStyle(.plain)
-                    .font(.body)
-                    .submitLabel(.search)
-                    .onSubmit {
-                        performSearch()
-                    }
-                
-                if !searchText.isEmpty {
-                    Button {
-                        searchText = ""
-                        viewModel.clearResults()
-                        isSearchFieldFocused = true
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.secondary)
-                    }
+            .navigationTitle("搜索鹦鹉")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: "输入脚环号搜索鹦鹉"
+            )
+            .onSubmit(of: .search) {
+                performSearch()
+            }
+            .onChange(of: searchText) { newValue in
+                if newValue.isEmpty {
+                    viewModel.clearResults()
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(.ultraThinMaterial)
-            .cornerRadius(12)
-            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-            .padding(.horizontal, 16)
             
-            // Recent searches (if any)
+            // 最近搜索记录
             if !viewModel.recentSearches.isEmpty && searchText.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("最近搜索")
-                        .font(.subheadline)
-                        .fontWeight(.medium)
-                        .foregroundColor(.secondary)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(viewModel.recentSearches, id: \.self) { recent in
-                                Button {
-                                    searchText = recent
-                                    performSearch()
-                                } label: {
+                List {
+                    Section("最近搜索") {
+                        ForEach(viewModel.recentSearches, id: \.self) { recent in
+                            Button {
+                                searchText = recent
+                                performSearch()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "clock.arrow.circlepath")
+                                        .foregroundColor(.secondary)
                                     Text(recent)
-                                        .font(.caption)
-                                        .padding(.horizontal, 12)
-                                        .padding(.vertical, 6)
-                                        .background(.ultraThinMaterial)
-                                        .foregroundColor(.primary)
-                                        .clipShape(Capsule())
+                                    Spacer()
                                 }
                             }
+                            .foregroundColor(.primary)
                         }
-                        .padding(.horizontal, 16)
                     }
                 }
-                .padding(.horizontal, 16)
+                .scrollContentBackground(.hidden)
             }
         }
-        .padding(.vertical, 12)
     }
     
     private var emptySearchState: some View {
         VStack {
             Spacer()
             VStack(spacing: 24) {
-                // Search illustration
+                // 搜索插图
                 ZStack {
                     Circle()
                         .fill(.blue.opacity(0.1))
@@ -150,7 +100,7 @@ struct SearchView: View {
                     .multilineTextAlignment(.center)
                 }
                 
-                // Search tips
+                // 搜索提示
                 VStack(alignment: .leading, spacing: 12) {
                     Text("搜索提示")
                         .font(.headline)
@@ -165,13 +115,12 @@ struct SearchView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 16)
-                .background(.ultraThinMaterial)
+                .background(Color.gray.opacity(0.05))
                 .cornerRadius(12)
-                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-                .padding(.horizontal, 32)
             }
             Spacer()
         }
+        .padding(.horizontal, 32)
     }
     
     private var loadingView: some View {
@@ -259,7 +208,6 @@ struct SearchView: View {
     private func performSearch() {
         guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         
-        isSearchFieldFocused = false
         Task {
             await viewModel.searchParrots(ring: searchText)
         }
@@ -312,7 +260,7 @@ struct SearchResultCard: View {
             }
         }
         .padding()
-        .background(.ultraThinMaterial)
+        .background(Color(.systemBackground))
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.horizontal, 16)

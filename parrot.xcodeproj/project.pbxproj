@@ -207,11 +207,12 @@
 				};
 			};
 			buildConfigurationList = 7B05EC372E85B8670000786D /* Build configuration list for PBXProject "parrot" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 7B05EC332E85B8670000786D;
 			minimizedProjectReferenceProxies = 1;

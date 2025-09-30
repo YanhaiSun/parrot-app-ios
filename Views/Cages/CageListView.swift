@@ -19,20 +19,7 @@ struct CageListView: View {
                     cageContent // 加载完成后显示内容
                 }
             }
-//            .onAppear {
-//                        // 重置加载状态
-//                        if !initialLoadCompleted {
-//                            Task {
-//                                await viewModel.loadSpecies()
-//                                if !viewModel.species.isEmpty {
-//                                    selectedSpecies = viewModel.species.first
-//                                    viewModel.loadCagesForSpecies(viewModel.species.first!.id)
-//                                }
-//                                initialLoadCompleted = true
-//                            }
-//                        }
-//                    }
-//            
+    
             .navigationDestination(for: Cage.self) { cage in
                 CageDetailView(
                     cage: cage,
@@ -43,28 +30,16 @@ struct CageListView: View {
             }
             .toolbar {
 //                 左上角的品种选择器
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .principal) {
                     speciesPicker
                 }
-                
-                // 右上角的按钮
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        showingAddCage = true
-                    } label: {
-                        Image(systemName: "plus")
-                            .font(.title2)
-                    }
-                }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showingAddCage) {
                 AddCageView { newCage in
                     viewModel.addCage(newCage)
                 }
             }
-//            .refreshable {
-//                await viewModel.refresh()
-//            }
             .task {
                 await viewModel.loadSpecies()
                 if !viewModel.species.isEmpty {
@@ -85,28 +60,18 @@ struct CageListView: View {
     
     // 品种选择器
     private var speciesPicker: some View {
-        Group {
-            // 实际的品种选择器
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(viewModel.species) { species in
-                        Button {
-                            selectedSpecies = species
-                            Task {
-                                viewModel.loadCagesForSpecies(species.id)
-                            }
-                        } label: {
-                            Text(species.name)
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(selectedSpecies?.id == species.id ? Color.blue : Color.gray.opacity(0.2))
-                                .foregroundColor(selectedSpecies?.id == species.id ? .white : .primary)
-                                .cornerRadius(20)
-                        }
-                    }
+        Picker("选择品种", selection: $selectedSpecies) {
+            ForEach(viewModel.species) { species in
+                Text(species.name)
+                    .tag(species as Species?)
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle()) // 默认菜单样式
+        .onChange(of: selectedSpecies) { newValue in
+            if let species = newValue {
+                Task {
+                    viewModel.loadCagesForSpecies(species.id)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
             }
         }
     }
@@ -229,7 +194,11 @@ struct CageCardView: View {
         .frame(height: 90)
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+//        .shadow(color: Color.black.opacity(0.3), radius: 12, x: 0, y: 1)
+        .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
     }
 }
 
