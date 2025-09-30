@@ -1,4 +1,5 @@
 import SwiftUI
+import Shimmer
 
 struct CageListView: View {
     @StateObject private var viewModel = CageListViewModel()
@@ -18,6 +19,20 @@ struct CageListView: View {
                     cageContent // 加载完成后显示内容
                 }
             }
+//            .onAppear {
+//                        // 重置加载状态
+//                        if !initialLoadCompleted {
+//                            Task {
+//                                await viewModel.loadSpecies()
+//                                if !viewModel.species.isEmpty {
+//                                    selectedSpecies = viewModel.species.first
+//                                    viewModel.loadCagesForSpecies(viewModel.species.first!.id)
+//                                }
+//                                initialLoadCompleted = true
+//                            }
+//                        }
+//                    }
+//            
             .navigationDestination(for: Cage.self) { cage in
                 CageDetailView(
                     cage: cage,
@@ -27,24 +42,18 @@ struct CageListView: View {
                 )
             }
             .toolbar {
-                // 左上角的品种选择器
+//                 左上角的品种选择器
                 ToolbarItem(placement: .navigationBarLeading) {
-                    if initialLoadCompleted { // 只在加载完成后显示选择器
-                        speciesPicker
-                    }
+                    speciesPicker
                 }
                 
                 // 右上角的按钮
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    if initialLoadCompleted { // 只在加载完成后显示按钮
-//                        HStack(spacing: 12) {
-                            Button {
-                                showingAddCage = true
-                            } label: {
-                                Image(systemName: "plus")
-                                    .font(.title2)
-                            }
-//                        }
+                    Button {
+                        showingAddCage = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
                     }
                 }
             }
@@ -53,14 +62,14 @@ struct CageListView: View {
                     viewModel.addCage(newCage)
                 }
             }
-            .refreshable {
-                await viewModel.refresh()
-            }
+//            .refreshable {
+//                await viewModel.refresh()
+//            }
             .task {
                 await viewModel.loadSpecies()
                 if !viewModel.species.isEmpty {
                     selectedSpecies = viewModel.species.first
-                    await viewModel.loadCagesForSpecies(viewModel.species.first!.id)
+                    viewModel.loadCagesForSpecies(viewModel.species.first!.id)
                 }
                 initialLoadCompleted = true // 标记初始加载完成
             }
@@ -76,26 +85,29 @@ struct CageListView: View {
     
     // 品种选择器
     private var speciesPicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 12) {
-                ForEach(viewModel.species) { species in
-                    Button {
-                        selectedSpecies = species
-                        Task {
-                            await viewModel.loadCagesForSpecies(species.id)
+        Group {
+            // 实际的品种选择器
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(viewModel.species) { species in
+                        Button {
+                            selectedSpecies = species
+                            Task {
+                                viewModel.loadCagesForSpecies(species.id)
+                            }
+                        } label: {
+                            Text(species.name)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(selectedSpecies?.id == species.id ? Color.blue : Color.gray.opacity(0.2))
+                                .foregroundColor(selectedSpecies?.id == species.id ? .white : .primary)
+                                .cornerRadius(20)
                         }
-                    } label: {
-                        Text(species.name)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(selectedSpecies?.id == species.id ? Color.blue : Color.gray.opacity(0.2))
-                            .foregroundColor(selectedSpecies?.id == species.id ? .white : .primary)
-                            .cornerRadius(20)
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
         }
     }
     
@@ -113,16 +125,20 @@ struct CageListView: View {
     }
     
     private var loadingView: some View {
-        VStack {
-            Spacer()
-            VStack(spacing: 16) {
-                ProgressView()
-                    .scaleEffect(1.2)
-                
-                Text("加载中...")
-                    .foregroundColor(.secondary)
+        ScrollView {
+            LazyVGrid(
+                columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4),
+                spacing: 12
+            ) {
+                // 模拟 12 个加载中的笼子卡片（3 行 x 4 列）
+                ForEach(0..<50) { _ in
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.15))
+                        .frame(height: 90)
+                        .shimmering() // 添加闪烁动画
+                }
             }
-            Spacer()
+            .padding()
         }
     }
     
@@ -157,7 +173,7 @@ struct CageListView: View {
     
     private var cageGrid: some View {
         ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 5), spacing: 12) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 12) {
                 ForEach(viewModel.filteredCages) { cage in
                     Button {
                         navigationPath.append(cage)
@@ -199,9 +215,9 @@ struct CageCardView: View {
                 .foregroundColor(.primary)
             
             HStack(spacing: 4) {
-                Image(systemName: "bird.fill")
+                Image(systemName: "bird")
                     .font(.caption2)
-                Text("\(cage.parrotCountInt)")
+                Text("\(cage.parrotCountInt)只")
                     .font(.caption2)
                     .fontWeight(.semibold)
             }

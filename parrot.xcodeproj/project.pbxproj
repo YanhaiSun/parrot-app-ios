@@ -14,6 +14,7 @@
 		7BD6F8C02E891733003590AD /* PROJECT_STRUCTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AD2E891733003590AD /* PROJECT_STRUCTURE.md */; };
 		7BD6F8C12E891733003590AD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AE2E891733003590AD /* README.md */; };
 		7BD6F8C52E891733003590AD /* parrotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AC2E891733003590AD /* parrotApp.swift */; };
+		7BD6F92F2E8BA2E7003590AD /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 7BD6F92E2E8BA2E7003590AD /* Shimmer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BD6F92F2E8BA2E7003590AD /* Shimmer in Frameworks */,
 				7B3EF7852E85D4EA008B44FF /* KeychainAccess in Frameworks */,
 				7B3EF7882E85D55F008B44FF /* Charts.framework in Frameworks */,
 			);
@@ -183,6 +185,7 @@
 			name = parrot;
 			packageProductDependencies = (
 				7B3EF7842E85D4EA008B44FF /* KeychainAccess */,
+				7BD6F92E2E8BA2E7003590AD /* Shimmer */,
 			);
 			productName = parrot;
 			productReference = 7B05EC3C2E85B8670000786D /* parrot.app */;
@@ -214,6 +217,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				7B3EF7832E85D4EA008B44FF /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				7BD6F92D2E8BA2E7003590AD /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7B05EC3D2E85B8670000786D /* Products */;
@@ -485,6 +489,14 @@
 				kind = branch;
 			};
 		};
+		7BD6F92D2E8BA2E7003590AD /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -492,6 +504,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B3EF7832E85D4EA008B44FF /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		7BD6F92E2E8BA2E7003590AD /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BD6F92D2E8BA2E7003590AD /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,12 +1,6 @@
-//
-//  DashboardView.swift
-//  parrot
-//
-//  Created by sunyanhai on 2025/9/26.
-//
-
 import SwiftUI
 import Charts
+import Shimmer
 
 struct DashboardView: View {
     @StateObject private var viewModel = DashboardViewModel()
@@ -15,8 +9,6 @@ struct DashboardView: View {
         NavigationView {
             ScrollView {
                 LazyVStack(spacing: 20) {
-                    
-                    // Quick stats in list format
                     statsListSection
                 }
                 .padding(.horizontal, 16)
@@ -37,18 +29,12 @@ struct DashboardView: View {
         let hour = Calendar.current.component(.hour, from: Date())
         
         switch hour {
-        case 6..<12:
-            return "上午好"
-        case 12..<14:
-            return "中午好"
-        case 14..<18:
-            return "下午好"
-        case 18..<24:
-            return "晚上好"
-        case 0..<6:
-            return "深夜好"
-        default:
-            return "你好"
+        case 6..<12: return "上午好"
+        case 12..<14: return "中午好"
+        case 14..<18: return "下午好"
+        case 18..<24: return "晚上好"
+        case 0..<6: return "深夜好"
+        default: return "你好"
         }
     }
     
@@ -90,7 +76,6 @@ struct DashboardView: View {
                 color: .green,
                 isLoading: viewModel.isLoading
             )
-            
         }
     }
 }
@@ -104,6 +89,7 @@ struct StatRow: View {
     
     var body: some View {
         HStack(spacing: 16) {
+            
             Image(systemName: icon)
                 .font(.title2)
                 .foregroundColor(color)
@@ -116,8 +102,9 @@ struct StatRow: View {
                 
                 if isLoading {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(.gray.opacity(0.3))
+                        .fill(Color.gray.opacity(0.3))
                         .frame(width: 60, height: 24)
+                        .shimmering()
                 } else {
                     Text(value)
                         .font(.title2)
@@ -129,7 +116,9 @@ struct StatRow: View {
             Spacer()
         }
         .padding()
-        .cardEffect()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 
@@ -143,54 +132,57 @@ struct OccupancyStatRow: View {
     
     var body: some View {
         HStack(spacing: 16) {
+            
             Image(systemName: icon)
                 .font(.title2)
                 .foregroundColor(color)
                 .frame(width: 40)
-            
+        
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                
                 if isLoading {
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(.gray.opacity(0.3))
+                        .fill(Color.gray.opacity(0.3))
                         .frame(width: 60, height: 24)
-                } else {
+                        .shimmering()
+                } else{
                     Text(value)
                         .font(.title2)
                         .fontWeight(.bold)
                         .contentTransition(.numericText())
                 }
+            
             }
             
             Spacer()
             
-            if !isLoading {
-                ZStack {
-                    Circle()
-                        .stroke(
-                            Color.gray.opacity(0.2),
-                            lineWidth: 8
+            ZStack {
+                Circle()
+                    .stroke(
+                        Color.gray.opacity(0.2),
+                        lineWidth: 8
+                    )
+                
+                Circle()
+                    .trim(from: 0, to: progress)
+                    .stroke(
+                        color,
+                        style: StrokeStyle(
+                            lineWidth: 8,
+                            lineCap: .round
                         )
-                    
-                    Circle()
-                        .trim(from: 0, to: progress)
-                        .stroke(
-                            color,
-                            style: StrokeStyle(
-                                lineWidth: 8,
-                                lineCap: .round
-                            )
-                        )
-                        .rotationEffect(.degrees(-90))
-                }
-                .frame(width: 40, height: 40)
+                    )
+                    .rotationEffect(.degrees(-90))
             }
+            .frame(width: 40, height: 40)
+            
         }
         .padding()
-        .cardEffect()
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
     }
 }
 

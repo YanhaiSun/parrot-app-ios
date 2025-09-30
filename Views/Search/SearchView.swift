@@ -18,19 +18,25 @@ struct SearchView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                // Search header
-                searchHeader
+            ZStack {
+                // Background
+                Color(.systemBackground)
+                    .ignoresSafeArea()
                 
-                // Content
-                if searchText.isEmpty {
-                    emptySearchState
-                } else if viewModel.isLoading {
-                    loadingView
-                } else if viewModel.searchResults.isEmpty {
-                    noResultsView
-                } else {
-                    searchResultsView
+                VStack(spacing: 0) {
+                    // Search header with frosted glass effect
+                    searchHeader
+                    
+                    // Content
+                    if searchText.isEmpty {
+                        emptySearchState
+                    } else if viewModel.isLoading {
+                        loadingView
+                    } else if viewModel.searchResults.isEmpty {
+                        noResultsView
+                    } else {
+                        searchResultsView
+                    }
                 }
             }
         }
@@ -38,7 +44,7 @@ struct SearchView: View {
     
     private var searchHeader: some View {
         VStack(spacing: 16) {
-            // Main search bar
+            // Main search bar with frosted glass
             HStack(spacing: 12) {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
@@ -64,31 +70,12 @@ struct SearchView: View {
                     }
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
-            .background(Color.glassBackground)
-            .cardEffect()
-//
-            // Search button
-//            if !searchText.isEmpty {
-//                Button {
-//                    performSearch()
-//                } label: {
-//                    HStack {
-//                        if viewModel.isLoading {
-//                            ProgressView()
-//                                .scaleEffect(0.8)
-//                                .tint(.white)
-//                        } else {
-//                            Image(systemName: "magnifyingglass")
-//                            Text("搜索")
-//                        }
-//                    }
-//                    .frame(maxWidth: .infinity)
-//                    .frame(height: 30)
-//                }
-//                .disabled(searchText.isEmpty || viewModel.isLoading)
-//            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(.ultraThinMaterial)
+            .cornerRadius(12)
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+            .padding(.horizontal, 16)
             
             // Recent searches (if any)
             if !viewModel.recentSearches.isEmpty && searchText.isEmpty {
@@ -109,18 +96,18 @@ struct SearchView: View {
                                         .font(.caption)
                                         .padding(.horizontal, 12)
                                         .padding(.vertical, 6)
-                                        .background(.gray.opacity(0.2))
+                                        .background(.ultraThinMaterial)
                                         .foregroundColor(.primary)
                                         .clipShape(Capsule())
                                 }
                             }
                         }
-                        .padding(.horizontal, 2)
+                        .padding(.horizontal, 16)
                     }
                 }
+                .padding(.horizontal, 16)
             }
         }
-        .padding(.horizontal, 16)
         .padding(.vertical, 12)
     }
     
@@ -178,11 +165,13 @@ struct SearchView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 16)
-                .glassEffect(.regular.tint(.gray.opacity(0.05)), in: .rect(cornerRadius: 12))
+                .background(.ultraThinMaterial)
+                .cornerRadius(12)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                .padding(.horizontal, 32)
             }
             Spacer()
         }
-        .padding(.horizontal, 32)
     }
     
     private var loadingView: some View {
@@ -321,14 +310,14 @@ struct SearchResultCard: View {
                     }
                 }
             }
-            
         }
         .padding()
-        .cardEffect()
+        .background(.ultraThinMaterial)
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         .padding(.horizontal, 16)
     }
 }
-
 
 #Preview {
     SearchView()

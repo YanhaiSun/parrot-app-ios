@@ -17,6 +17,8 @@ class CageListViewModel: ObservableObject {
         @Published var errorMessage: String?
         @Published var hasMorePages = false
         @Published var species: [Species] = []
+        @Published var isLoadingSpecies = false
+
         
         private let dataService = DataService.shared
         private var cancellables = Set<AnyCancellable>()
@@ -173,6 +175,7 @@ class CageListViewModel: ObservableObject {
         
     // 加载品种数据（使用async/await）
         func loadSpecies() async {
+            isLoadingSpecies = true
             do {
                 let species = try await dataService.fetchSpecies()
                     .asyncValues
@@ -180,6 +183,7 @@ class CageListViewModel: ObservableObject {
                 
                 self.species = species
                 print("✅ Successfully loaded \(species.count) species")
+                isLoadingSpecies = false
             } catch {
                 print("❌ Failed to load species: \(error)")
                 errorMessage = "加载品种数据失败"

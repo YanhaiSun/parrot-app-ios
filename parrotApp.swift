@@ -12,6 +12,10 @@ struct parrotApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .onAppear {
+                    // 设置 UITableView 的背景色（影响 SwiftUI List）
+                    UITableView.appearance().backgroundColor = .systemGroupedBackground
+                }
         }
     }
 }

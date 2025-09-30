@@ -39,52 +39,29 @@ class DashboardViewModel: ObservableObject {
     func loadData() async {
         isLoading = true
         
-        // Load data concurrently
-        let cagesPublisher = dataService.fetchAllCages()
-        let parrotsPublisher = dataService.fetchAllParrots()
+        // 使用 CombineLatest 同时监听两个数据源
+        let combinedPublisher = Publishers.CombineLatest(
+            dataService.fetchAllCages(),
+            dataService.fetchAllParrots()
+        )
         
-        // Handle cages data
-        cagesPublisher
+        combinedPublisher
             .receive(on: DispatchQueue.main)
             .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        print("[loadData()]Failed to load cages data: \(error)")
-                    case .finished:
-                        break
+                receiveCompletion: { [weak self] completion in
+                    self?.isLoading = false
+                    if case .failure(let error) = completion {
+                        print("数据加载失败: \(error)")
                     }
                 },
-                receiveValue: { [weak self] cages in
+                receiveValue: { [weak self] (cages, parrotsResponse) in
                     self?.processCagesData(cages)
-                }
-            )
-            .store(in: &cancellables)
-        
-        // Handle parrots data
-        parrotsPublisher
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        print("Failed to load parrots data: \(error)")
-                    case .finished:
-                        break
-                    }
-                },
-                receiveValue: { [weak self] parrotsResponse in
                     self?.totalParrots = parrotsResponse.total
                 }
             )
             .store(in: &cancellables)
-        
-        
-        // Set loading to false after a short delay to allow network requests to complete
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.isLoading = false
-        }
     }
+        
     
     func refresh() async {
         await loadData()
