@@ -6,14 +6,111 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7B3EF7852E85D4EA008B44FF /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7B3EF7842E85D4EA008B44FF /* KeychainAccess */; };
+		7B3EF7882E85D55F008B44FF /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3EF7872E85D55F008B44FF /* Charts.framework */; };
+		7BD6F8BE2E891733003590AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8A72E891733003590AD /* Assets.xcassets */; };
+		7BD6F8BF2E891733003590AD /* iOS16_COMPATIBILITY_FIX.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AA2E891733003590AD /* iOS16_COMPATIBILITY_FIX.md */; };
+		7BD6F8C02E891733003590AD /* PROJECT_STRUCTURE.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AD2E891733003590AD /* PROJECT_STRUCTURE.md */; };
+		7BD6F8C12E891733003590AD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AE2E891733003590AD /* README.md */; };
+		7BD6F8C52E891733003590AD /* parrotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD6F8AC2E891733003590AD /* parrotApp.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7B05EC3C2E85B8670000786D /* parrot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parrot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B3EF7872E85D55F008B44FF /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Charts.framework; sourceTree = DEVELOPER_DIR; };
+		7BD6F8A72E891733003590AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7BD6F8AA2E891733003590AD /* iOS16_COMPATIBILITY_FIX.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = iOS16_COMPATIBILITY_FIX.md; sourceTree = "<group>"; };
+		7BD6F8AC2E891733003590AD /* parrotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parrotApp.swift; sourceTree = "<group>"; };
+		7BD6F8AD2E891733003590AD /* PROJECT_STRUCTURE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PROJECT_STRUCTURE.md; sourceTree = "<group>"; };
+		7BD6F8AE2E891733003590AD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7BD6F9292E8B7E02003590AD /* Exceptions for "Extensions" folder in "parrot" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				iOS16Extensions.swift,
+			);
+			target = 7B05EC3B2E85B8670000786D /* parrot */;
+		};
+		7BD6F92A2E8B7E02003590AD /* Exceptions for "Services" folder in "parrot" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AuthManager.swift,
+				DataService.swift,
+				NetworkManager.swift,
+			);
+			target = 7B05EC3B2E85B8670000786D /* parrot */;
+		};
+		7BD6F92B2E8B7E02003590AD /* Exceptions for "ViewModels" folder in "parrot" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				CageDetailViewModel.swift,
+				CageListViewModel.swift,
+				DashboardViewModel.swift,
+				ParrotListViewModel.swift,
+				SearchViewModel.swift,
+			);
+			target = 7B05EC3B2E85B8670000786D /* parrot */;
+		};
+		7BD6F92C2E8B7E02003590AD /* Exceptions for "Views" folder in "parrot" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Authentication/AuthenticationLoginView.swift,
+				Cages/AddCageView.swift,
+				Cages/AddParrotView.swift,
+				Cages/CageDetailView.swift,
+				Cages/CageListView.swift,
+				Cages/EditParrotView.swift,
+				Cages/ParrotRowView.swift,
+				ContentView.swift,
+				Dashboard/DashboardView.swift,
+				MainTabView.swift,
+				Parrots/ParrotListView.swift,
+				Profile/ProfileView.swift,
+				Search/SearchView.swift,
+			);
+			target = 7B05EC3B2E85B8670000786D /* parrot */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7B05EC3E2E85B8670000786D /* parrot */ = {
+		7BD6F8F12E8B7E01003590AD /* Extensions */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = parrot;
+			exceptions = (
+				7BD6F9292E8B7E02003590AD /* Exceptions for "Extensions" folder in "parrot" target */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7BD6F8F32E8B7E01003590AD /* Models */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7BD6F8F72E8B7E01003590AD /* Services */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7BD6F92A2E8B7E02003590AD /* Exceptions for "Services" folder in "parrot" target */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7BD6F8FD2E8B7E01003590AD /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7BD6F92B2E8B7E02003590AD /* Exceptions for "ViewModels" folder in "parrot" target */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		7BD6F9112E8B7E01003590AD /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7BD6F92C2E8B7E02003590AD /* Exceptions for "Views" folder in "parrot" target */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +120,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B3EF7852E85D4EA008B44FF /* KeychainAccess in Frameworks */,
+				7B3EF7882E85D55F008B44FF /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,8 +131,18 @@
 		7B05EC332E85B8670000786D = {
 			isa = PBXGroup;
 			children = (
-				7B05EC3E2E85B8670000786D /* parrot */,
+				7B3EF7862E85D55F008B44FF /* Frameworks */,
 				7B05EC3D2E85B8670000786D /* Products */,
+				7BD6F8F12E8B7E01003590AD /* Extensions */,
+				7BD6F8F32E8B7E01003590AD /* Models */,
+				7BD6F8F72E8B7E01003590AD /* Services */,
+				7BD6F8FD2E8B7E01003590AD /* ViewModels */,
+				7BD6F9112E8B7E01003590AD /* Views */,
+				7BD6F8A72E891733003590AD /* Assets.xcassets */,
+				7BD6F8AA2E891733003590AD /* iOS16_COMPATIBILITY_FIX.md */,
+				7BD6F8AC2E891733003590AD /* parrotApp.swift */,
+				7BD6F8AD2E891733003590AD /* PROJECT_STRUCTURE.md */,
+				7BD6F8AE2E891733003590AD /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -43,6 +152,14 @@
 				7B05EC3C2E85B8670000786D /* parrot.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7B3EF7862E85D55F008B44FF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7B3EF7872E85D55F008B44FF /* Charts.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -61,10 +178,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7B05EC3E2E85B8670000786D /* parrot */,
+				7BD6F8F32E8B7E01003590AD /* Models */,
 			);
 			name = parrot;
 			packageProductDependencies = (
+				7B3EF7842E85D4EA008B44FF /* KeychainAccess */,
 			);
 			productName = parrot;
 			productReference = 7B05EC3C2E85B8670000786D /* parrot.app */;
@@ -94,6 +212,9 @@
 			);
 			mainGroup = 7B05EC332E85B8670000786D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7B3EF7832E85D4EA008B44FF /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7B05EC3D2E85B8670000786D /* Products */;
 			projectDirPath = "";
@@ -109,6 +230,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BD6F8BE2E891733003590AD /* Assets.xcassets in Resources */,
+				7BD6F8BF2E891733003590AD /* iOS16_COMPATIBILITY_FIX.md in Resources */,
+				7BD6F8C02E891733003590AD /* PROJECT_STRUCTURE.md in Resources */,
+				7BD6F8C12E891733003590AD /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BD6F8C52E891733003590AD /* parrotApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +372,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 896FZ2AN77;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -260,7 +387,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.7;
@@ -270,13 +397,14 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Debug;
@@ -288,6 +416,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 896FZ2AN77;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
@@ -302,7 +431,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.7;
@@ -312,13 +441,14 @@
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.0;
 			};
 			name = Release;
@@ -345,6 +475,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7B3EF7832E85D4EA008B44FF /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7B3EF7842E85D4EA008B44FF /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B3EF7832E85D4EA008B44FF /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7B05EC342E85B8670000786D /* Project object */;
 }
